@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Milestone 06: Methods Outline</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+        line-height: 1.6;
+        background-color: #f9f9f9;
+        color: #333;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #004080;
+      }
+      section {
+        margin-bottom: 40px;
+      }
+      .container {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      a {
+        color: #0066cc;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Project Milestone 06: Methods Outline</h1>
+
+      <section>
+        <h2>Complete Methods Outline</h2>
+        <p>
+          Our project focuses on building an accessible web application for
+          low-vision users by integrating Optical Character Recognition (OCR)
+          and AI-powered image captioning technologies. We will use
+          <b>Tesseract OCR</b> to extract text from images and PDFs, converting
+          this information into spoken content through text-to-speech features.
+          Additionally, we will leverage pre-trained models like BLIP and Donut
+          from Hugging Face to generate descriptive captions for images and
+          layouts within documents. These captions will enhance the user
+          experience by providing context and descriptions otherwise
+          inaccessible to visually impaired individuals. For development, we
+          will use web frameworks such as Gradio and Streamlit, allowing users
+          to easily upload documents, receive audio outputs, and navigate
+          structured document content. The Tesseract OCR Training Dataset and
+          the large SynthText dataset will be used to fine-tune and validate our
+          models, ensuring accurate extraction and robust performance across
+          diverse formats. Post-processing techniques will clean extracted text
+          and refine captions for coherence and accuracy. We will iteratively
+          test the web application, incorporating feedback from peers to improve
+          accessibility, layout, and functionality. Performance optimization and
+          cloud-based solutions will be explored to mitigate any delays in
+          processing. Our ultimate goal is to create a seamless and immersive
+          content consumption experience for low-vision users.
+        </p>
+      </section>
+
+      <section>
+        <h2>Software and Implementation Plan</h2>
+        <p>
+          <b>Optical Character Recognition (OCR) for Text Extraction</b>: To
+          extract text from images and PDFs, <b>Tesseract OCR</b> will be used
+          due to its open-source nature and high accuracy in recognizing
+          characters from various languages and fonts. Tesseract allows seamless
+          conversion of scanned documents and image-based text into readable
+          digital content. This feature is particularly crucial for low-vision
+          users who rely on screen readers and text-to-speech applications to
+          access written information.
+        </p>
+
+        <p>
+          <b>AI-Powered Image Captioning for Better Understanding</b>: To
+          enhance image comprehension, pre-trained deep learning models from
+          <b>Hugging Face</b>, such as <b>BLIP or Donut</b>, will be employed to
+          generate descriptive captions. These models use advanced machine
+          learning techniques to analyze visual content and provide meaningful
+          descriptions of images.
+        </p>
+
+        <p>
+          <b>Web Application Development</b>: The web application will be built
+          using an interactive framework to allow users to upload images and
+          PDFs for processing. Two main options for development include
+          <b>Gradio</b> and <b>Streamlit</b>. <b>Gradio</b> is particularly
+          suited for integrating machine learning models with an intuitive user
+          interface. <b>Streamlit</b>, on the other hand, provides a structured
+          layout that is more suitable for applications requiring detailed
+          document processing and structured navigation of extracted
+          information.
+        </p>
+      </section>
+
+      <section>
+        <h2>Dataset to Use</h2>
+        <p>
+          For our project, we will be using the
+          <strong>Tesseract OCR Training Dataset</strong>, a hand-labeled
+          dataset designed to fine-tune Tesseract's OCR capabilities. It
+          includes comprehensive text samples and custom scripts to streamline
+          improvements. We will also consider using
+          <strong>SynthText</strong> to fine-tune Tesseract. SynthText provides
+          synthetic yet realistic text overlays on various backgrounds, helping
+          fine-tune or test Tesseract's robustness on diverse document layouts.
+        </p>
+
+        <p><strong>SynthText.zip</strong> (size: 41GB) contains:</p>
+        <ul>
+          <li>
+            858,750 synthetic scene-image files (.jpg) split into 200
+            directories
+          </li>
+          <li>7,266,866 word-instances</li>
+          <li>28,971,487 characters</li>
+        </ul>
+
+        <p>
+          Ground-truth annotations are contained in the file
+          <code>gt.mat</code> (Matlab format), including the following cell
+          arrays (size 1x858,750 each):
+        </p>
+        <ul>
+          <li><strong>imnames</strong>: names of the image files</li>
+          <li>
+            <strong>wordBB</strong>: word-level bounding-boxes (tensors of size
+            2x4xNWORDS_i), with:
+            <ul>
+              <li>First dimension: 2 for x and y respectively</li>
+              <li>Second dimension: 4 points (clockwise from top-left)</li>
+              <li>Third dimension: number of words in the ith image</li>
+            </ul>
+          </li>
+          <li>
+            <strong>charBB</strong>: character-level bounding-boxes (tensors of
+            size 2x4xNCHARS_i; same format as <code>wordBB</code>)
+          </li>
+          <li>
+            <strong>txt</strong>: text strings contained in each image (char
+            array), structured so that:
+            <ul>
+              <li>
+                Words belonging to the same "instance" (same font, color,
+                distortion) are grouped by line-feed character (ASCII: 10)
+              </li>
+              <li>
+                A "word" is any contiguous string of non-whitespace characters
+              </li>
+              <li>A "character" is defined as any non-whitespace character</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Tools Used for Analysis</h2>
+        <p>
+          To process and analyze user-inputted data, our project will utilize a
+          combination of OCR (Optical Character Recognition) and AI-powered
+          image captioning tools. These tools will work together to provide a
+          complete document accessibility solution for low-vision users.
+        </p>
+        <ul>
+          <li>
+            <strong
+              >Tesseract OCR for Text-to-Speech and Layout Analysis</strong
+            >
+            <ul>
+              <li>
+                Tesseract OCR will be responsible for extracting text from
+                scanned documents, images, and PDFs.
+              </li>
+              <li>
+                The extracted text will be converted into speech, allowing
+                low-vision users to hear document contents through a screen
+                reader.
+              </li>
+              <li>
+                In later project stages, Tesseract OCR will also analyze the
+                output of image captioning models, providing spoken descriptions
+                of document layouts and embedded images.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong
+              >HuggingFace Image-to-Text Models for Image Captioning</strong
+            >
+            <ul>
+              <li>
+                AI-powered image captioning models, such as BLIP and Donut, will
+                be implemented using the Hugging Face Transformers API.
+              </li>
+              <li>
+                These models will generate meaningful, context-aware
+                descriptions of images and diagrams within documents.
+              </li>
+              <li>
+                The goal is to enhance document accessibility by ensuring that
+                visual content is not overlooked but instead integrated into a
+                seamless, narrated digital experience for users.
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <strong>Post-Processing and Integration Considerations</strong>
+            <ul>
+              <li>
+                <strong>OCR Output Refinement:</strong> Post-processing
+                techniques will be applied to clean up extracted text and
+                correct formatting inconsistencies.
+              </li>
+              <li>
+                <strong>Caption Verification:</strong> Image captions generated
+                by AI models will be reviewed for accuracy and coherence.
+              </li>
+              <li>
+                <strong>Speech Output Optimization:</strong> The text-to-speech
+                functionality will be optimized for clarity and naturalness to
+                ensure usability.
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <strong>Other Software-based Analysis:</strong>
+            <ul>
+              <li>
+                Accuracy tracking using precision, recall, and F1 scores with
+                libraries like <code>scikit-learn</code>.
+              </li>
+              <li>
+                Data visualization through <code>Matplotlib</code> or
+                <code>Plotly</code> for understanding error distributions and
+                model performance.
+              </li>
+              <li>
+                Image pre-processing diagnostics using <code>OpenCV</code> to
+                enhance OCR input quality.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Manual and Team-Based Analysis:</strong>
+            <ul>
+              <li>
+                Human evaluation and rating of randomly selected outputs for
+                clarity, accuracy, and usability.
+              </li>
+              <li>
+                Error categorization through collaborative documentation (e.g.,
+                spreadsheets) to track common mistakes.
+              </li>
+              <li>
+                Focus groups and interviews with low-vision users to collect
+                qualitative feedback.
+              </li>
+              <li>
+                Peer review sessions for cross-checking outputs and improving
+                model context understanding.
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Possible Pitfalls:</h2>
+        <p>
+          While our approach integrates well-established tools, there are
+          several potential challenges we anticipate:
+        </p>
+        <ul>
+          <li>
+            <strong>OCR Accuracy and Layout Interpretation</strong>
+            <ul>
+              <li>
+                Challenge: Tesseract OCR may struggle with extracting text from
+                documents with complex layouts (e.g., tables, multi-column text)
+                or poor contrast.
+              </li>
+              <li>
+                Mitigation: Fine-tune Tesseract using the SynthText dataset and
+                apply layout segmentation techniques to improve accuracy.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Contextual Errors in Image Captioning</strong>
+            <ul>
+              <li>
+                Challenge: AI-powered image captioning models (BLIP, Donut) may
+                generate descriptions that are vague, biased, or contextually
+                inaccurate.
+              </li>
+              <li>
+                Mitigation: Implement post-processing techniques, refine model
+                prompts, and incorporate human feedback loops to improve the
+                quality of generated captions.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Performance and Computational Cost</strong>
+            <ul>
+              <li>
+                Challenge: Running OCR and image captioning models in real-time
+                may require significant processing power, leading to potential
+                delays.
+              </li>
+              <li>
+                Mitigation: Optimize the models for efficiency, explore
+                cloud-based processing solutions, and implement batch processing
+                for large files.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Accessibility Challenges in UI Design</strong>
+            <ul>
+              <li>
+                Challenge: Ensuring the interface is fully accessible to
+                low-vision users, including proper contrast, screen reader
+                compatibility, and ease of navigation.
+              </li>
+              <li>
+                Mitigation: Conduct iterative user testing with visually
+                impaired individuals and refine UI elements based on feedback.
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>
